@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       AstroPad
-// @version    0.25.11
+// @version    0.25.11.1
 // @grant      GM_xmlhttpRequest
 // @match      http://mush.vg/*
 // @match      http://mush.vg/#
@@ -38,6 +38,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_HIDDEN="namey6:Hiddeng"
 	TXT_BROKEN="namey6:Brokeng"
 	TXT_BROKEN2="Broken"
+	TXT_HEAVY="Heavy"	// TODO a verification
 	TXT_EFFECT="Effects"
 	TXT_EFFECT2="the effects"
 	TXT_IMPERISHABLE="Imperishable"
@@ -52,6 +53,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_UNSTABLE='Unstable'
 	TXT_HAZARDOUS='Hazardous'
 	TXT_DECAYING='Decomposing'
+	TXT_FROZEN='Frozen'	// TODO a verification
 	TXT_CHARGES='namey7:Chargesg'	// TODO a verification
 
 	TXT_BY="by"
@@ -106,6 +108,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_HIDDEN="y4:namey6:Ocultog"
 	TXT_BROKEN="namey4:Rotog"
 	TXT_BROKEN2="Roto"
+	TXT_HEAVY="Pesado"
 	TXT_EFFECT="Efectos"
 	TXT_EFFECT2="los efectos"
 	TXT_IMPERISHABLE="No perecible"
@@ -120,6 +123,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_UNSTABLE='Sospechosa'
 	TXT_HAZARDOUS='Nocivo'
 	TXT_DECAYING='Tóxica'
+	TXT_FROZEN='Congelado'
 	TXT_CHARGES='y4:namey6:Cargasg'
 
 	TXT_BY="por"
@@ -173,6 +177,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_HIDDEN="namey10:Cach%C3%A9g"
 	TXT_BROKEN="namey10:Cass%C3%A9g"
 	TXT_BROKEN2="Cassé(e)"
+	TXT_HEAVY="Lourd"	// TODO a verification
 	TXT_EFFECT="Effets"
 	TXT_EFFECT2="les effets"
 	TXT_IMPERISHABLE="Impérissable"
@@ -187,6 +192,7 @@ if (window.location.href.indexOf('mush.twinoid.com')!=-1) {
 	TXT_UNSTABLE='Instable'
 	TXT_HAZARDOUS='Avariée'
 	TXT_DECAYING='Décomposition'
+	TXT_FROZEN='Congelé'	// TODO a verification
 	TXT_CHARGES='namey7:Chargesg'
 
 	TXT_BY="par"
@@ -528,9 +534,8 @@ function astro_maj_inventaire() {
 				var iserial = li.attr('serial');
 				var inb;
 
-				//TODO a adapter pour les autres langues
-				if(dataName.indexOf('namey12:Congel%C3%A9g') !=-1) {
-					iname+=" Congelé";
+				if(dataName.indexOf(TXT_FROZEN) !=-1) {
+					iname+=" "+TXT_FROZEN;
 				}
 
 				if (readFoodEffect) {
@@ -546,6 +551,9 @@ function astro_maj_inventaire() {
 				}
 				if(dataName.indexOf(TXT_BROKEN) !=-1) {
 					iname+=" "+TXT_BROKEN2;
+				}
+				if(dataName.indexOf(TXT_HEAVY) !=-1) {
+					iname+=" "+TXT_HEAVY;
 				}
 
 				icharge=dataName.indexOf(TXT_CHARGES)
@@ -739,9 +747,11 @@ function astro_get_inventaire() {
 						iname = iname.replace(new RegExp(capitalize(TXT_DRY),"g"),"<img src='\/img\/icons\/ui\/plant_dry.png' alt='"+TXT_DRY+"' title='"+TXT_DRY+"'\/>");
 						iname = iname.replace(new RegExp(capitalize(TXT_DISEASED),"g"),"<img src='\/img\/icons\/ui\/plant_diseased.png' alt='"+TXT_DISEASED+"' title='"+TXT_DISEASED+"'\/>");
 						iname = iname.replace(new RegExp(capitalize(TXT_BROKEN2),"g"),"<img src='\/img\/icons\/ui\/broken.png' alt='"+TXT_BROKEN2+"' title='"+TXT_BROKEN2+"'\/>");
+						iname = iname.replace(new RegExp(capitalize(TXT_HEAVY),"g"),"<img src='\/img\/icons\/ui\/heavy.png' alt='"+TXT_HEAVY+"' title='"+TXT_HEAVY+"'\/>");
 						iname = iname.replace(new RegExp(capitalize(TXT_UNSTABLE),"g"),"<img src='\/img\/icons\/ui\/food_unstable.png' alt='"+TXT_UNSTABLE+"' title='"+TXT_UNSTABLE+"'\/>");
 						iname = iname.replace(new RegExp(capitalize(TXT_HAZARDOUS),"g"),"<img src='\/img\/icons\/ui\/food_hazardous.png' alt='"+TXT_HAZARDOUS+"' title='"+TXT_HAZARDOUS+"'\/>");
 						iname = iname.replace(new RegExp(capitalize(TXT_DECAYING),"g"),"<img src='\/img\/icons\/ui\/food_decaying.png' alt='"+TXT_DECAYING+"' title='"+TXT_DECAYING+"'\/>");
+						iname = iname.replace(new RegExp(capitalize(TXT_FROZEN),"g"),"<img src='\/img\/icons\/ui\/food_frozen.png' alt='"+TXT_FROZEN+"' title='"+TXT_FROZEN+"'\/>");
 						if (idetail) {
 							idetail = idetail.replace(/ :pa:/g,"<img class='paslot' src='\/img\/icons\/ui\/pa_slot1.png' alt='pa' \/>");
 							idetail = idetail.replace(/ :moral:/g,"<img src='\/img\/icons\/ui\/moral.png' alt='moral' \/>");
