@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       AstroPad
-// @version    0.26.2
+// @version    0.26.5
 // @grant      unsafeWindow
 // @grant      GM_xmlhttpRequest
 // @connect    astropad.sunsky.fr
@@ -12,7 +12,7 @@
 // @match      http://mush.twinoid.es/#
 // @require    https://code.jquery.com/jquery-2.2.1.min.js
 // @copyright  2012+, Sunsky (inspiration Skildor' scripts), compatibility with Firefox 32+ by badconker, update by LAbare
-// @downloadURL https://github.com/badconker/astropad/raw/master/astropad.user.js
+// @downloadURL https://github.com/Javiernh/astropad/raw/master/astropad.user.js
 // ==/UserScript==
 
 var console = unsafeWindow.console;
@@ -609,7 +609,7 @@ Main.AstroPad.propertiesToText = function(idetail) {
 				return n;
 			};
 
-			if (prop.chances != undefined && prop.chances) {
+			if (prop.chances != undefined && prop.chances && prop.chances != 100) {
 				attr += prop.chances + "% : ";
 			}
 
@@ -644,7 +644,7 @@ Main.AstroPad.propertiesToText = function(idetail) {
 		}
 	}
 
-	return [iname, attrs.join(',')];
+	return [iname, attrs.join(', ')];
 };
 
 Main.AstroPad.sendData = function(sendCallback) {
@@ -1587,7 +1587,7 @@ Main.AstroPad.getLocalData = function() {
 				}
 				//Food effects
 				else {
-					var delay = new RegExp('\\(([0-9]+-[0-9]+) ' + Main.AstroPad.txt.cycles + '\\)').exec(line);
+					var delay = new RegExp('\\(([0-9]+-[0-9]+) ' + Main.AstroPad.txt.cycles.replace(/\(|\)/g, '\\$&') + '\\)').exec(line);
 					if (delay) {
 						line.replace(delay[0], ''); //Isolate value
 						delay = delay[1];
@@ -1629,11 +1629,11 @@ Main.AstroPad.getLocalData = function() {
 					}
 					else if (line.search(Main.AstroPad.txt.curesText) != -1) {
 						type = 'cures';
-						value = line.replace(Main.AstroPad.txt.curesText).trim();
+						value = line.replace(Main.AstroPad.txt.curesText, '').trim();
 					}
 					else if (line.search(Main.AstroPad.txt.causesText) != -1) {
 						type = 'causes';
-						value = line.replace(Main.AstroPad.txt.causesText).trim();
+						value = line.replace(Main.AstroPad.txt.causesText, '').trim();
 					}
 					else {
 						continue;
